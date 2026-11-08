@@ -1,0 +1,8 @@
+{
+  "dev": {
+    "run": "npm run dev"
+  },
+  "database": "hackutd2026-5b053",
+  "module-path": "./spacetimedb",
+  "server": "maincloud"
+}

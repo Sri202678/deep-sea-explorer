@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07131e" />
+    <meta
+      name="description"
+      content="A live command console for deep-sea exploration missions."
+    />
+    <title>Abyssal — Deep Sea Mission Control</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#" aria-label="Abyssal home">
+          <span class="brand-mark" aria-hidden="true">◈</span>
+          <span>abyssal<span class="brand-period">.</span></span>
+        </a>
+
+        <div class="side-label">MISSION</div>
+        <div class="mission-switcher">
+          <span class="mission-icon">⌁</span>
+          <span><strong>PELAGIC II</strong><small>Pacific · Site 04</small></span>
+          <span class="switcher-chevron">⌄</span>
+        </div>
+
+        <nav class="side-nav" aria-label="Main navigation">
+          <a class="nav-link active" href="#overview"><span>◫</span> Overview</a>
+          <a class="nav-link" href="#camera-panel"><span>▣</span> Camera feed</a>
+          <a class="nav-link" href="#telemetry"><span>⌁</span> Telemetry</a>
+          <a class="nav-link" href="#ocean-map"><span>◇</span> Ocean map</a>
+          <a class="nav-link" href="#ecosystem"><span>⌘</span> Ecosystem</a>
+          <a class="nav-link" href="#marine-life"><span>◉</span> Marine life</a>
+          <a class="nav-link" href="#sensors"><span>⊙</span> Sensors</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="vehicle-card">
+            <div class="vehicle-card-top"><span class="status-dot"></span> <span id="vehicle-connection-state">CONNECTING</span></div>
+            <strong id="vehicle-callsign">YOUR SUBMARINE</strong>
+            <div class="vehicle-detail">Simulated · shared state</div>
+            <div class="battery-row"><span>Battery</span><strong id="battery-value">84%</strong></div>
+            <div class="battery-track"><span id="battery-bar"></span></div>
+          </div>
+          <a class="nav-link settings-link" href="#controls"><span>⚙</span> Controls</a>
+          <div class="profile"><div class="avatar">MC</div><span><strong>Mission control</strong><small>Research team</small></span><span class="profile-more">···</span></div>
+        </div>
+      </aside>
+
+      <main class="main-content" id="overview">
+        <header class="topbar">
+          <div class="breadcrumb">MISSIONS <span>/</span> <strong>PELAGIC II</strong></div>
+          <div class="topbar-right">
+            <div class="stream-status"><span class="status-dot"></span><span id="stream-label">LIVE SIMULATION</span></div>
+            <span class="topbar-divider"></span>
+            <span class="clock" id="mission-clock">00:00:00 UTC</span>
+            <button class="icon-button" id="pause-button" aria-label="Pause live data" title="Pause live data">Ⅱ</button>
+          </div>
+        </header>
+
+        <section class="page-heading">
+          <div>
+            <div class="eyebrow"><span class="live-pulse"></span> EXPEDITION IN PROGRESS</div>
+            <h1>Into the <span>blue.</span></h1>
+            <p class="heading-copy">Shared submarine state and simulated telemetry from the Pacific abyss.</p>
+          </div>
+          <div class="mission-meta">
+            <div><span class="meta-label">MISSION ELAPSED</span><strong id="elapsed-time">02:18:42</strong></div>
+            <div class="meta-divider"></div>
+            <div><span class="meta-label">DIVE NUMBER</span><strong>08 <span class="meta-muted">/ 12</span></strong></div>
+          </div>
+        </section>
+
+        <section class="metrics-grid" aria-label="Live mission readings">
+          <article class="metric-card depth-card">
+            <div class="metric-top"><span class="metric-icon depth-icon">↧</span><span class="metric-label">DEPTH</span><span class="metric-indicator">LIVE</span></div>
+            <div class="metric-value"><span id="depth-value">3,842</span><small>m</small></div>
+            <div class="metric-foot"><span class="trend-down">↓</span><span id="depth-trend">12 m</span> from last reading</div>
+            <div class="metric-spark" id="depth-spark"></div>
+          </article>
+          <article class="metric-card">
+            <div class="metric-top"><span class="metric-icon temp-icon">°</span><span class="metric-label">WATER TEMP</span><span class="metric-indicator">LIVE</span></div>
+            <div class="metric-value"><span id="temp-value">2.4</span><small>°C</small></div>
+            <div class="metric-foot"><span class="trend-flat">↔</span> Target <span id="target-inline">3.0</span>°C</div>
+            <div class="metric-spark" id="temp-spark"></div>
+          </article>
+          <article class="metric-card">
+            <div class="metric-top"><span class="metric-icon pressure-icon">◉</span><span class="metric-label">PRESSURE</span><span class="metric-indicator">LIVE</span></div>
+            <div class="metric-value"><span id="pressure-value">38.7</span><small>MPa</small></div>
+            <div class="metric-foot"><span class="trend-up">↑</span><span id="pressure-trend">0.2</span> MPa this minute</div>
+            <div class="metric-spark" id="pressure-spark"></div>
+          </article>
+          <article class="metric-card">
+            <div class="metric-top"><span class="metric-icon oxygen-icon">◌</span><span class="metric-label">DISSOLVED O₂</span><span class="metric-indicator">LIVE</span></div>
+            <div class="metric-value"><span id="oxygen-value">4.8</span><small>mg/L</small></div>
+            <div class="metric-foot"><span class="trend-stable">●</span> Within safe range</div>
+            <div class="metric-spark" id="oxygen-spark"></div>
+          </article>
+        </section>
+
+        <section class="exploration-section" id="ocean-map">
+          <div class="exploration-heading">
+            <div>
+              <div class="eyebrow"><span class="live-pulse"></span> EXPLORATION DECK</div>
+              <h2>Chart the unknown.</h2>
+              <p>Explore illustrative terrain, move a submarine, and coordinate shared missions.</p>
+            </div>
+            <span class="simulation-chip">SIMULATED TERRAIN · ILLUSTRATIVE WAYPOINTS</span>
+          </div>
+
+          <div class="exploration-grid">
+            <article class="panel map-panel">
+              <div class="panel-header"><div><div class="panel-kicker">3D BATHYMETRY VIEWER</div><h2>Pacific survey area</h2></div><div class="map-toolbar"><span class="map-coordinate" id="map-coordinate">32.0°S · 178.0°W</span><button class="small-icon-button" id="map-reset" title="Reset map view" aria-label="Reset map view">↺</button></div></div>
+              <div class="map-canvas-wrap" id="map-canvas-wrap">
+                <canvas id="ocean-map-canvas" aria-label="Interactive simulated 3D ocean terrain. Drag to rotate and use the wheel to zoom." role="img"></canvas>
+                <div class="map-overlay map-overlay-top"><span><i class="map-live-dot"></i> SONAR MAPPING</span><span id="map-depth-label">SEAFLOOR · 5,100 M</span></div>
+                <div class="map-overlay map-overlay-bottom"><span>DRAG TO ROTATE</span><span>SCROLL TO ZOOM</span><span>SELECT A PIN TO ROUTE</span></div>
+                <div class="map-zoom-controls"><button id="map-zoom-in" aria-label="Zoom in">+</button><button id="map-zoom-out" aria-label="Zoom out">−</button></div>
+              </div>
+              <div class="map-legend"><span><i class="legend-current"></i> Your submarine</span><span><i class="legend-target"></i> Teammate submarine</span><span><i class="legend-logged"></i> Shared discovery</span><span class="terrain-caption">Procedural relief · not navigational bathymetry</span></div>
+              <div class="map-selection"><div><span class="panel-kicker">SELECTED WAYPOINT</span><strong id="selected-waypoint-name">Kermadec Ridge</strong><small id="selected-waypoint-detail">Pacific · 32°S, 178°W · ~5,100 m</small></div><button id="route-waypoint" class="route-button">Move submarine here <span>↗</span></button></div>
+              <div class="shared-submarines"><div class="route-recommendation-label">SUBMARINES · LIVE SHARED STATE</div><div id="shared-submarine-list"></div></div>
+            </article>
+
+            <div class="exploration-side">
+              <article class="panel scanner-panel">
+                <div class="panel-header"><div><div class="panel-kicker">PATTERN SCANNER · HEURISTICS</div><h2>Discovery scanner</h2></div><span class="scanner-chip"><i></i> ACTIVE</span></div>
+                <p class="form-intro">Rule-based screening of field notes and simulated sensors. Flags are leads for a scientist—not AI species identification.</p>
+                <div class="scanner-confidence"><span>SCREENING MODEL</span><strong>EXPLORATORY</strong><small>Not validated for scientific or conservation decisions</small></div>
+                <div class="robot-uplink">
+                  <div class="robot-uplink-heading"><span><i class="robot-uplink-dot"></i> NAUTILUS-01 DATA UPLINK</span><strong id="robot-stream-status">SIMULATED STREAM · RUNNING</strong></div>
+                  <p>The vehicle reports sample encounters. This synthetic stream is for demo use; real robot telemetry is not connected.</p>
+                  <div class="robot-uplink-footer"><span><strong id="robot-report-count">6</strong> sample reports · <span id="robot-report-time">awaiting next scan</span></span><button id="robot-stream-toggle" type="button">Pause reports</button></div>
+                </div>
+                <div class="scanner-findings" id="scanner-findings" aria-live="polite"></div>
+                <div class="scanner-footnote">"Rare" below means few records in this expedition log, not global rarity.</div>
+              </article>
+
+              <article class="panel mission-panel" id="mission-control">
+                <div class="panel-header"><div><div class="panel-kicker">SHARED DATABASE · TRANSACTIONAL ASSIGNMENT</div><h2>Mission coordination</h2></div><span class="mission-state-chip" id="mission-state">CONNECTING</span></div>
+                <div class="mission-battery"><div class="mission-battery-heading"><span>Your submarine battery · simulated</span><strong id="mission-battery-value">—</strong></div><div class="mission-battery-track"><span id="mission-battery-bar"></span></div></div>
+                <form id="mission-create-form" class="shared-form">
+                  <label>New mission<input name="title" maxlength="100" placeholder="e.g. Survey vent field" required /></label>
+                  <label>Brief<input name="description" maxlength="500" placeholder="Objective for the team" /></label>
+                  <button class="mission-action primary" type="submit">Create at selected waypoint</button>
+                </form>
+                <div class="route-recommendations"><div class="route-recommendation-label">OPEN & ACTIVE MISSIONS</div><div id="shared-mission-list"></div></div>
+                <div class="mission-note" id="mission-note">Assignments and progress are validated by SpacetimeDB. Position and battery remain simulated; no physical vehicle is controlled.</div>
+              </article>
+
+              <article class="panel discovery-panel">
+                <div class="panel-header"><div><div class="panel-kicker">SHARED FIELD JOURNAL</div><h2>Discoveries</h2></div><span class="ecosystem-sample" id="discovery-count">0 SHARED</span></div>
+                <form id="discovery-form" class="shared-form">
+                  <label>Type<select name="kind"><option>Marine life</option><option>Hydrothermal vent</option><option>Seafloor formation</option><option>Other</option></select></label>
+                  <label>Name<input name="name" maxlength="100" placeholder="Observation label" required /></label>
+                  <label>Field notes<textarea name="notes" maxlength="1000" rows="2" placeholder="What did the ROV observe?"></textarea></label>
+                  <button class="mission-action primary" type="submit">Save shared discovery</button>
+                  <small>Saved at the selected waypoint · illustrative/simulated report.</small>
+                </form>
+                <div class="shared-record-list" id="shared-discovery-list"></div>
+              </article>
+            </div>
+          </div>
+
+          <article class="panel ecosystem-panel" id="ecosystem">
+            <div class="panel-header"><div><div class="panel-kicker">CO-OCCURRENCE · OBSERVATION LOG</div><h2>Ecosystem relationships</h2></div><span class="ecosystem-sample" id="ecosystem-sample">AWAITING FIELD DATA</span></div>
+            <div class="ecosystem-content">
+              <div class="ecosystem-graph-wrap"><svg id="ecosystem-graph" viewBox="0 0 720 240" role="img" aria-label="Observed links between species and their recorded depth, water temperature, and oxygen context"></svg></div>
+              <aside class="ecosystem-insight"><div class="panel-kicker">WHAT THE LOG SAYS</div><div id="ecosystem-insights"><p>Record sightings to reveal which species were observed in the same regions and depth bands.</p></div><div class="science-caveat">Associations are descriptive co-observations only. They do not establish interaction, causation, or population abundance.</div></aside>
+            </div>
+            <div class="ecosystem-legend"><span><i class="eco-species-dot"></i> Species records</span><span><i class="eco-habitat-dot"></i> Habitat context</span><span><i class="eco-link"></i> Shared observation context</span><span class="terrain-caption">Simulated sensor readings are labeled in the mission cards above.</span></div>
+          </article>
+        </section>
+
+        <section class="workspace-grid">
+          <article class="panel camera-panel" id="camera-panel">
+            <div class="panel-header">
+              <div><div class="panel-kicker">VISUAL SYSTEM</div><h2>Deep-sea camera</h2></div>
+              <div class="camera-tools"><span class="recording-label"><span class="record-dot"></span> REC</span><button class="small-icon-button" id="snapshot-button" aria-label="Save camera snapshot" title="Save camera snapshot">▧</button><button class="small-icon-button" id="camera-button" aria-label="Start camera" title="Start camera">⏻</button></div>
+            </div>
+            <div class="camera-view" id="camera-view">
+              <div class="ocean-scene" id="ocean-scene" aria-hidden="true">
+                <div class="water-beam beam-one"></div><div class="water-beam beam-two"></div>
+                <div class="ocean-haze"></div><div class="seafloor"></div>
+                <div class="coral coral-left"><i></i><i></i><i></i><i></i><i></i></div>
+                <div class="coral coral-right"><i></i><i></i><i></i><i></i><i></i></div>
+                <div class="anglerfish"><div class="fish-glow"></div><div class="fish-body"></div><div class="fish-tail"></div><div class="fish-fin"></div><div class="fish-eye"></div></div>
+                <div class="submersible"><span class="sub-light"></span><span class="sub-window"></span><span class="sub-arm"></span></div>
+                <span class="bubble bubble-a"></span><span class="bubble bubble-b"></span><span class="bubble bubble-c"></span>
+              </div>
+              <video id="camera-video" autoplay playsinline muted></video>
+              <div class="camera-vignette"></div>
+              <div class="camera-overlay">
+                <div class="camera-tag"><span class="camera-live-dot"></span><span id="camera-status">DEMO FOOTAGE</span></div>
+                <div class="camera-coordinates">32° 08' 14.2" S<br />178° 22' 06.8" W</div>
+                <div class="camera-bottom-left"><span>CAM 01</span><span class="camera-separator">/</span><span id="camera-depth">3,842 M</span></div>
+                <div class="camera-bottom-right"><span class="focus-mark">＋</span><span>4K · 30 FPS</span></div>
+              </div>
+            </div>
+            <div class="camera-footer"><span><span class="tiny-status"></span> Optical feed <strong id="feed-status">demo mode</strong></span><span>Last frame <strong id="frame-time">just now</strong></span></div>
+          </article>
+
+          <article class="panel controls-panel" id="controls">
+            <div class="panel-header">
+              <div><div class="panel-kicker">VEHICLE MANAGEMENT</div><h2>Environment controls</h2></div>
+              <span class="control-lock"><span>●</span> SIMULATED CONTROLS</span>
+            </div>
+            <div class="control-block">
+              <div class="control-title-row"><div><div class="control-title">Temperature setpoint</div><div class="control-description">Specimen chamber target</div></div><div class="control-reading"><strong id="target-value">3.0</strong><span>°C</span></div></div>
+              <input id="temperature-control" class="range-control temp-range" type="range" min="0" max="12" value="3" step="0.5" aria-label="Temperature setpoint in degrees Celsius" />
+              <div class="range-labels"><span>0°C</span><span>6°C</span><span>12°C</span></div>
+              <div class="target-note"><span class="target-note-icon">↗</span> Current water temperature <strong id="current-water-temp">2.4°C</strong></div>
+            </div>
+            <div class="control-rule"></div>
+            <div class="control-block">
+              <div class="control-title-row"><div><div class="control-title">Camera illumination</div><div class="control-description">LED array intensity</div></div><div class="control-reading"><strong id="light-value">72</strong><span>%</span></div></div>
+              <input id="light-control" class="range-control light-range" type="range" min="0" max="100" value="72" aria-label="Camera illumination percentage" />
+              <div class="range-labels"><span>Off</span><span>50%</span><span>Max</span></div>
+            </div>
+            <div class="control-rule"></div>
+            <div class="control-block sensor-toggles">
+              <div class="control-title-row"><div><div class="control-title">Sensor array</div><div class="control-description">Active measurement channels</div></div><span class="sensor-count"><span id="active-count">4</span> / 4 ON</span></div>
+              <label class="sensor-toggle-row"><span class="sensor-mini-icon">⌁</span><span class="sensor-toggle-name">CTD probe<small>Conductivity · temp · depth</small></span><input type="checkbox" class="toggle-input" checked data-sensor="ctd" /><span class="toggle-switch"></span></label>
+              <label class="sensor-toggle-row"><span class="sensor-mini-icon">◉</span><span class="sensor-toggle-name">Oxygen sensor<small>Dissolved oxygen optode</small></span><input type="checkbox" class="toggle-input" checked data-sensor="oxygen" /><span class="toggle-switch"></span></label>
+              <label class="sensor-toggle-row"><span class="sensor-mini-icon">⌗</span><span class="sensor-toggle-name">Sonar array<small>Forward-scan imaging sonar</small></span><input type="checkbox" class="toggle-input" checked data-sensor="sonar" /><span class="toggle-switch"></span></label>
+              <label class="sensor-toggle-row"><span class="sensor-mini-icon">◉</span><span class="sensor-toggle-name">Hull pressure<small>External pressure transducer</small></span><input type="checkbox" class="toggle-input" checked data-sensor="pressure" /><span class="toggle-switch"></span></label>
+            </div>
+          </article>
+        </section>
+
+        <section class="lower-grid" id="telemetry">
+          <article class="panel chart-panel">
+            <div class="panel-header chart-heading">
+              <div><div class="panel-kicker">CTD PROBE · LIVE STREAM</div><h2>Temperature profile</h2></div>
+              <div class="chart-legend"><span></span> Water temp <strong id="chart-current">2.4°C</strong><select id="chart-range" aria-label="Chart time range"><option value="1">1 MIN</option><option value="5">5 MIN</option><option value="15">15 MIN</option></select></div>
+            </div>
+            <div class="chart-wrap">
+              <div class="chart-y-labels"><span>4.0°</span><span>3.0°</span><span>2.0°</span><span>1.0°</span></div>
+              <div class="chart-plot">
+                <div class="chart-grid-lines"><i></i><i></i><i></i><i></i></div>
+                <svg id="temperature-chart" viewBox="0 0 640 150" preserveAspectRatio="none" role="img" aria-label="Live water temperature history"><defs><linearGradient id="chart-fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#55d6c3" stop-opacity=".2" /><stop offset="100%" stop-color="#55d6c3" stop-opacity="0" /></linearGradient></defs><path id="chart-area" d="" fill="url(#chart-fill)" /><path id="chart-line" d="" fill="none" stroke="#61ddca" stroke-width="2.5" vector-effect="non-scaling-stroke" /><circle id="chart-dot" cx="0" cy="0" r="4" fill="#07131e" stroke="#72e9d8" stroke-width="2" vector-effect="non-scaling-stroke" /></svg>
+              </div>
+            </div>
+            <div class="chart-x-labels"><span id="chart-time-start">2 min ago</span><span>90 sec</span><span>60 sec</span><span>30 sec</span><span>NOW</span></div>
+          </article>
+          <article class="panel sensors-panel" id="sensors">
+            <div class="panel-header"><div><div class="panel-kicker">INSTRUMENTATION</div><h2>Sensor health</h2></div><button class="text-button" id="refresh-sensors">Refresh <span>↻</span></button></div>
+            <div class="sensor-list">
+              <div class="sensor-row" data-sensor-row="ctd"><span class="sensor-health-icon ctd-health">⌁</span><span class="sensor-health-name">CTD probe<small>Serial · CTD-0842</small></span><span class="sensor-health-reading" id="salinity-reading">34.7 <small>PSU</small></span><span class="health-pill"><i></i>Nominal</span></div>
+              <div class="sensor-row" data-sensor-row="oxygen"><span class="sensor-health-icon oxygen-health">◉</span><span class="sensor-health-name">Oxygen optode<small>Serial · OX-2190</small></span><span class="sensor-health-reading" id="sensor-oxygen">4.8 <small>mg/L</small></span><span class="health-pill"><i></i>Nominal</span></div>
+              <div class="sensor-row" data-sensor-row="sonar"><span class="sensor-health-icon sonar-health">⌗</span><span class="sensor-health-name">Imaging sonar<small>Serial · SN-0317</small></span><span class="sensor-health-reading" id="sonar-range">28.4 <small>m range</small></span><span class="health-pill"><i></i>Nominal</span></div>
+              <div class="sensor-row" data-sensor-row="pressure"><span class="sensor-health-icon pressure-health">◉</span><span class="sensor-health-name">Pressure hull<small>Serial · PR-5502</small></span><span class="sensor-health-reading" id="hull-reading">38.7 <small>MPa</small></span><span class="health-pill"><i></i>Nominal</span></div>
+            </div>
+            <div class="shared-alerts">
+              <div class="route-recommendation-label">SHARED SENSOR ALERTS · DEMO THRESHOLDS</div>
+              <button class="mission-action" id="inject-sensor-alert" type="button">Inject simulated anomaly</button>
+              <div class="shared-record-list" id="shared-alert-list"></div>
+            </div>
+          </article>
+        </section>
+
+        <section class="marine-section" id="marine-life">
+          <div class="marine-section-heading">
+            <div>
+              <div class="eyebrow"><span class="live-pulse"></span> SPECIES INTELLIGENCE</div>
+              <h2>What lives down here?</h2>
+              <p>Log sightings, compare distribution against OBIS, and flag records that need expert review.</p>
+            </div>
+            <div class="db-connection"><span class="status-dot" id="db-status-dot"></span><span id="db-status">CONNECTING TO MAINCloud</span></div>
+          </div>
+
+          <div class="species-grid">
+            <article class="panel observation-panel">
+              <div class="panel-header"><div><div class="panel-kicker">FIELD LOG · LIVE DATABASE</div><h2>Record an observation</h2></div><span class="privacy-chip">LOCATION PRIVACY ON</span></div>
+              <p class="form-intro">Submit a sighting to the shared mission log. Use cited sources for scientific status; uncertain IDs are not treated as new species.</p>
+              <form id="observation-form" class="observation-form">
+                <div class="form-field"><label for="common-name">Common name</label><input id="common-name" name="commonName" maxlength="100" placeholder="e.g. Giant squid" required /></div>
+                <div class="form-field"><label for="scientific-name">Scientific name</label><input id="scientific-name" name="scientificName" maxlength="160" placeholder="e.g. Architeuthis dux" required /></div>
+                <div class="form-row">
+                  <div class="form-field"><label for="latitude">Latitude</label><input id="latitude" name="latitude" type="number" min="-90" max="90" step="any" placeholder="-32.13" required /></div>
+                  <div class="form-field"><label for="longitude">Longitude</label><input id="longitude" name="longitude" type="number" min="-180" max="180" step="any" placeholder="-178.37" required /></div>
+                </div>
+                <div class="form-field"><label for="observation-region">Ocean basin / region</label><select id="observation-region" name="region" required><option>Pacific</option><option>Atlantic</option><option>Indian</option><option>Southern</option><option>Arctic</option><option>Other / coastal sea</option></select></div>
+                <div class="form-row">
+                  <div class="form-field"><label for="length-cm">Observed length <small>cm</small></label><input id="length-cm" name="lengthCm" type="number" min="0.1" max="100000" step="any" placeholder="Measured size" required /></div>
+                  <div class="form-field"><label for="depth-m">Depth <small>m</small></label><input id="depth-m" name="depthM" type="number" min="0" max="11000" step="any" value="3842" required /></div>
+                </div>
+                <div class="form-row">
+                  <div class="form-field"><label for="adult-size-cm">Reference adult size <small>cm</small></label><input id="adult-size-cm" name="adultSizeCm" type="number" min="1" max="100000" step="any" placeholder="Optional" /></div>
+                  <div class="form-field"><label for="lifespan-years">Reference lifespan <small>years</small></label><input id="lifespan-years" name="lifespanYears" type="number" min="1" max="500" step="1" placeholder="Optional" /></div>
+                </div>
+                <div class="age-estimate"><span>Rough size-based age estimate</span><strong id="age-preview">Not enough reference data</strong><small>Linear size/lifespan estimate only; not a validated age measurement.</small></div>
+                <div class="form-field"><label for="biological-source">Size/lifespan reference URL <small>required for age estimate</small></label><input id="biological-source" name="biologicalSource" type="url" maxlength="500" placeholder="Link to a species reference" /></div>
+                <div class="form-row">
+                  <div class="form-field"><label for="conservation-status">Conservation status</label><select id="conservation-status" name="conservationStatus"><option>Unknown</option><option>Rare (reported)</option><option>Not evaluated</option><option>Data deficient</option><option>Least concern</option><option>Near threatened</option><option>Vulnerable</option><option>Endangered</option><option>Critically endangered</option></select></div>
+                  <div class="form-field"><label for="review-status">Identification</label><select id="review-status" name="reviewStatus"><option>Known species</option><option>Possible range extension</option><option>Uncertain identification</option><option>Candidate undescribed species</option></select></div>
+                </div>
+                <div class="form-field"><label for="conservation-source">Conservation source URL <small>citation for context</small></label><input id="conservation-source" name="conservationSource" type="url" maxlength="500" placeholder="https://www.iucnredlist.org/..." /></div>
+                <div class="form-field"><label for="evidence-source">Evidence URL <small>optional</small></label><input id="evidence-source" name="evidenceSource" type="url" maxlength="500" placeholder="Link to a specimen or image" /></div>
+                <div class="form-field"><label for="image-upload">Attach a discovery image <small>optional · compressed before sharing</small></label><input id="image-upload" type="file" accept="image/*" /><input id="evidence-image" type="hidden" /><img id="evidence-image-preview" class="journal-image-preview" alt="Selected discovery image preview" hidden /><small id="image-upload-status" class="image-upload-status">Attached images are shared with mission subscribers.</small></div>
+                <div class="form-field"><label for="observation-notes">Field notes <small>optional</small></label><textarea id="observation-notes" name="notes" maxlength="1000" rows="2" placeholder="Behavior, features, confidence, or environmental context"></textarea></div>
+                <div class="privacy-note"><span>◈</span> Coordinates are rounded to approximately 55 km before they are shared publicly, to help protect sensitive species.</div>
+                <button type="submit" class="submit-observation" id="submit-observation" disabled>Connect to database to submit <span>↗</span></button>
+              </form>
+            </article>
+
+            <div class="species-side-column">
+              <article class="panel obis-panel">
+                <div class="panel-header"><div><div class="panel-kicker">SCIENTIFIC REFERENCE · OBIS</div><h2>Known occurrence distribution</h2></div><span class="obis-mark">OBIS</span></div>
+                <p class="form-intro">Search the Ocean Biodiversity Information System for published occurrence records by scientific name.</p>
+                <form id="obis-search-form" class="obis-search">
+                  <label class="sr-only" for="obis-search-name">Scientific name to search in OBIS</label>
+                  <input id="obis-search-name" name="scientificName" placeholder="e.g. Architeuthis dux" required />
+                  <button type="submit" id="obis-search-button">Compare</button>
+                </form>
+                <div id="obis-status" class="obis-status" role="status" aria-live="polite">Search a scientific name to load public OBIS occurrence data.</div>
+                <div id="obis-summary" class="obis-summary" hidden></div>
+                <div id="obis-chart" class="obis-chart"><div class="empty-chart">Distribution grid will appear here after a search.</div></div>
+                <div class="source-caption">OBIS global occurrence grid · cell counts, not population estimates. <a id="obis-source-link" href="https://obis.org/" target="_blank" rel="noreferrer">About OBIS ↗</a></div>
+                <div class="science-caveat">OBIS describes recorded occurrences, not age or conservation status. A possible undescribed species or range extension must be verified by a taxonomist.</div>
+              </article>
+
+              <article class="panel sightings-panel">
+                <div class="panel-header"><div><div class="panel-kicker">SHARED FIELD LOG</div><h2>Team observations</h2></div><span class="observation-count" id="observation-count">0 records</span></div>
+                <div id="sighting-chart" class="sighting-chart"><div class="empty-chart">Your submitted observations will build this regional chart.</div></div>
+                <div id="observation-list" class="observation-list"><div class="empty-observations">No sightings logged yet. Record one to start the expedition dataset.</div></div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <footer class="page-footer"><span>PELAGIC II · PACIFIC OCEAN EXPEDITION</span><span>TELEMETRY UPDATES EVERY SECOND <i></i></span></footer>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      </main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

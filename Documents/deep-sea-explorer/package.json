@@ -1,0 +1,23 @@
+{
+  "name": "deep-sea-explorer",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "spacetime:generate": "spacetime generate --lang typescript --out-dir src/module_bindings --module-path spacetimedb",
+    "spacetime:publish:local": "spacetime publish hackutd2026-5b053 --module-path spacetimedb --server local --no-config",
+    "spacetime:publish": "spacetime publish hackutd2026-5b053 --module-path spacetimedb --server maincloud --no-config"
+  },
+  "dependencies": {
+    "spacetimedb": "2.14.*"
+  },
+  "devDependencies": {
+    "typescript": "~5.6.2",
+    "vite": "^7.1.5"
+  },
+  "engines": {
+    "node": "^22.23.4 || ^24.22.1 || >=26.12.1"
+  }
+}
